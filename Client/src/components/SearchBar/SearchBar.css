@@ -1,0 +1,55 @@
+.search-bar{
+    display: flex;
+    background-color: #3B3B4E;
+    width: 100%;
+    max-width: 800px;
+    justify-content: space-between;
+    border-radius: 6px;
+    padding: 5px 20px 5px 10px;
+    gap: 18px;
+    transition: all 0.5s;
+  }
+
+  .search-bar:hover {
+    transform: translateY(-8px);
+    filter: drop-shadow(8px 6px 1px #000000);
+  }
+  
+  .search_input {
+    padding: 6px;
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 0.8rem;
+    font-weight: 500px;
+    background-color: #3B3B4E;
+    color: #fcfff7;
+    border-right: 1px solid #5F5F7E;
+  }
+  
+  ::-webkit-input-placeholder {
+    color: #5F5F7E;
+  
+  }
+  
+  :-moz-placeholder { /* Firefox 18- */
+    color: #5F5F7E;  
+  }
+  
+  ::-moz-placeholder {  /* Firefox 19+ */
+    color: #5F5F7E;  
+  }
+  
+  :-ms-input-placeholder {  
+    color: #5F5F7E;  
+  }
+  
+  .search_button{
+    background: none;
+    border: none;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fcfff7;
+  }

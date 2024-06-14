@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&display=swap");
+
+.menu {
+  height: 100vh;
+  width: 160px;
+  background-color: #21212d;
+  border-right: 2px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(45deg, #3c1365, #ff2e63, #08d9d6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+}
+
+.img-logo {
+  width: 100%;
+  height: 150px;
+}
+
+.logo {
+  width: 100%;
+  object-fit: cover;
+  padding: 10px;
+}
+.menu-content {
+  height: 100%;
+  padding-top: 30px;
+}
+
+.li-link {
+
+  display: flex;
+  gap: 14px;
+  padding: 30px;
+  align-items: center;
+}
+
+.li-link, button {
+  cursor: pointer;
+}
+
+.menu-p:hover > button {
+  background: none;
+  border: none;
+  color: #eaeaea;
+  font-size: 35px;
+  transition: all 0.7s;
+  padding: 5px;
+}
+
+.li-link:hover > button {
+  background-color: #08d9d6;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.btn-menu {
+  background: none;
+  border: none;
+  color: #eaeaea;
+  font-size: 35px;
+  transition: all 0.7s;
+  padding: 5px;
+}
+
+.btn-menu:hover {
+  background-color: #08d9d6;
+  border-radius: 10px;
+}
+
+.menu-p {
+  color: #eaeaea;
+  font-family: "Ubuntu Sans", sans-serif;
+}
