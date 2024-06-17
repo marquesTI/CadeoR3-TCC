@@ -56,7 +56,22 @@ app.post("/registerCli", (req, res) => {
 
   db.query(
     SQL,
-    [nome, email, login, senha, tel, cpf, rg, cnpj, ie, cep, logradouro, uf, cidade, numero],
+    [
+      nome,
+      email,
+      login,
+      senha,
+      tel,
+      cpf,
+      rg,
+      cnpj,
+      ie,
+      cep,
+      logradouro,
+      uf,
+      cidade,
+      numero,
+    ],
     (err, result) => {
       console.log(err);
     }
@@ -76,6 +91,25 @@ app.post("/search", (req, res) => {
   db.query(mysql, [nome, tipo, qtd, valor, codbarras, capa], (err, result) => {
     if (err) res.send(err);
     res.send(result);
+  });
+});
+
+app.get("/produto/:codbarras", (req, res) => {
+  const { codbarras } = req.params;
+  console.log(`Buscando produto com código de barras: ${codbarras}`); // Adicione este log
+  let mysql = "SELECT * FROM vwProdutos WHERE Codbarras = ?";
+  db.query(mysql, [codbarras], (err, result) => {
+    if (err) {
+      console.error("Erro ao buscar detalhes do produto:", err); // Adicione este log
+      res.status(500).send("Erro ao buscar detalhes do produto");
+      return;
+    }
+    console.log("Resultado da consulta:", result);
+    if (result.length > 0) {
+      res.json(result[0]);
+    } else {
+      res.status(404).send("Produto não encontrado");
+    }
   });
 });
 

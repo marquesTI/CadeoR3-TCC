@@ -55,6 +55,7 @@ function Home() {
                 listCard={listCard}
                 setListCard={setListCard}
                 key={val.CodBarras}
+                codbarras={val.CodBarras}
                 nome={val.Nome}
                 tipo={val.Tipo}
                 qtd={val.Qtd}
@@ -67,10 +68,9 @@ function Home() {
       </div>
 
       <div className="background-container">
-      <div className="main-container">
-
-        <img src={Background} alt="" />
-      </div>
+        <div className="main-container">
+          <img src={Background} alt="" />
+        </div>
       </div>
     </>
   );
