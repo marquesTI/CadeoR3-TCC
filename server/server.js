@@ -122,17 +122,20 @@ app.get("/getcards", (req, res) => {
   });
 });
 
+
 app.put("/edit", (req, res) => {
   const { codbarras } = req.body;
   const { nome } = req.body;
-  const { valor } = req.body;
+  const { tipo } = req.body;
 
-  let mysql = "UPDATE TbEstoque SET Nome = ?, Valor = ?  WHERE CodBarras = ?";
-  db.query(mysql, [nome, valor, codbarras], (err, result) => {
+  let mysql = "UPDATE TbEstoque SET Nome = ?, Tipo = ? WHERE CodBarras = ?";
+  db.query(mysql, [nome, tipo, codbarras], (err, result) => {
     if (err) {
       res.send(err);
+      console.log(err)
     } else {
       res.send(result);
+      console.log(res)
     }
   });
 });

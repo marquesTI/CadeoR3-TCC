@@ -136,6 +136,7 @@ function Admin() {
           nome={val.Nome}
           tipo={val.Tipo}
           qtd={val.Qtd}
+          descricao={val.Descricao}
           valor={val.Valor}
           capa={val.Capa}
         />

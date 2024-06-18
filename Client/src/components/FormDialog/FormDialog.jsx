@@ -1,11 +1,14 @@
+import * as React from "react";
 import { useState } from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import Axios from "axios";
+import "../FormDialog/FormDialog.css";
 
 export default function FormDialog(props) {
   const [editValues, setEditValues] = useState({
@@ -64,13 +67,12 @@ export default function FormDialog(props) {
   };
 
   return (
-    <div>
+    <>
       <Dialog
         open={props.open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Editar</DialogTitle>
         <DialogContent>
           <TextField
             disabled
@@ -111,6 +113,45 @@ export default function FormDialog(props) {
             onChange={handleChangeValues}
             fullWidth
           />
+
+          <TextField
+            margin="dense"
+            id="qtd"
+            label="Quantidade"
+            defaultValue={props.qtd}
+            type="text"
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="descricao"
+            label="Descrição"
+            defaultValue={props.descricao}
+            type="text"
+            onChange={handleChangeValues}
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="estilo"
+            label="Estilo"
+            defaultValue={props.estilo}
+            type="number"
+            onChange={handleChangeValues}
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="capa"
+            label="Capa"
+            defaultValue={props.capa}
+            type="text"
+            onChange={handleChangeValues}
+            fullWidth
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
@@ -124,6 +165,6 @@ export default function FormDialog(props) {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }
