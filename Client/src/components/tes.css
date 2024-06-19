@@ -1,0 +1,11 @@
+.tes {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.cart {
+  margin-left: 50px;
+}
