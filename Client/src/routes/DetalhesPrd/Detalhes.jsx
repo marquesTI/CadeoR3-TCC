@@ -44,7 +44,7 @@ function DetalheProduto() {
         <p>Valor: R${produto.Valor}</p>
         <p>Tipo: {produto.Tipo}</p>
         <p>Quantidade: {produto.Qtd}</p>
-        <button onClick={}>Compre já</button>
+        <button>Compre já</button>
       </div>
     </div>
   );

@@ -1,0 +1,95 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+
+
+.container {
+    margin-top: 1rem;
+    margin-left: 40rem;
+    width: 500px; /* Largura fixa do contêiner */
+    height: 55rem; /* Altura fixa do contêiner */
+    background-color:black; /* Cor de fundo para visualização */
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+    border-right: 2px solid;
+    border-width: 2px;
+    border-style: solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(45deg, #3c1365, #ff2e63, #08d9d6);
+    padding: 10px;
+    text-align: center  ;
+}
+
+.container .logo{
+    margin-left: 10px;
+    margin-top: 0;
+    width: 200px;
+    height: 200px;
+}
+.Inputs{
+    margin-top: 2rem;
+}
+.container input{
+    width: 400px;
+    height: 30px;
+    text-align: center;
+    margin-top: 1px;
+    font-size: 1.2rem;
+    border-radius: 2rem;
+}
+.container button{
+    width: 200px;
+    height: auto;
+    margin-top: 2px;
+    font-size: 1.2rem;
+    border-radius: 1rem;
+}
+
+
+@media screen and (max-width:768px){
+
+    .container {
+        margin-top: 0rem;
+        margin-left: 10rem;
+        width: 400px; /* Largura fixa do contêiner */
+        height: 1000px; /* Altura fixa do contêiner */
+        background-color:black; /* Cor de fundo para visualização */
+        padding: 20px; /* Espaçamento interno */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+        border-right: 2px solid;
+        border-width: 2px;
+        border-style: solid;
+        border-image-slice: 1;
+        border-image-source: linear-gradient(45deg, #3c1365, #ff2e63, #08d9d6);
+        padding: 10px;
+        text-align: center  ;
+    }
+    
+    .container .logo{
+        margin-left: 10px;
+        margin-top: 0rem;
+        width: 250px;
+        height: 250px;
+    }
+    .Inputs{
+        margin-top: 5rem;
+    }
+    .container input{
+        width: 300px;
+        height: 30px;
+        text-align: center;
+        margin-top: 1px;
+        font-size: 1rem;
+        border-radius: 2rem;
+    }
+    .container button{
+        width: 200px;
+        height: auto;
+        margin-top: 10px;
+        font-size: 1.4rem;
+        border-radius: 1rem;
+    }
+    
+}

@@ -2,6 +2,7 @@ import { Container, Box } from "@chakra-ui/react";
 import { useState } from "react";
 import Axios from "axios";
 import "../Register/Register.css";
+import Logo from "../../../assets/img/logo.png";
 
 function Register() {
   const [values, setValues] = useState();
@@ -35,7 +36,12 @@ function Register() {
 
   return (
     <>
-      <Container maxW="container.sm" centerContent>
+      <Container maxW="container.sm" centerContent className="container">
+        <div className=".wrapper">
+      <div className="img-logo">
+        <img src={Logo} alt="Logo" className="logo" />
+      </div>
+      <div className="Inputs">
         <Box p="6">
           <input
             type="text"
@@ -184,12 +190,13 @@ function Register() {
             onChange={handleaddValues}
           />
         </Box>
-
+        </div>
         <Box p="6" centerContent>
           <button onClick={handleRegisterCli} className="register-button">
             Cadastrar
           </button>
         </Box>
+        </div>
       </Container>
     </>
   );
