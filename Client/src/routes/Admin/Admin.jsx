@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "../Admin/Admin.css";
 import Axios from "axios";
 import Cards from "../../components/Cards/Cards";
+import Logo from "../../assets/img/logo.png";
 
 function Admin() {
   const [values, setValues] = useState();
@@ -61,8 +62,11 @@ function Admin() {
   return (
     <div className="container-adm">
       <div className="register-container">
-        <h1 className="register-title">Cadê o R3?</h1>
+      <div className="img-logo-adm">
+        <img src={Logo} alt="Logo" className="logo" />
+      </div>
 
+      <div className="Inputs">
         <input
           type="number"
           name="codbarras"
@@ -121,6 +125,7 @@ function Admin() {
           className="register-input"
           onChange={handleaddValues}
         />
+        </div>
 
         <button onClick={handleRegisterGame} className="register-button">
           Cadastrar

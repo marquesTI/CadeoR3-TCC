@@ -1,6 +1,7 @@
 .container-adm {
   height: 100%;
   width: 100%;
+  padding: 1rem;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -11,8 +12,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 500px;
-  height: 90vh;
+  width: 550px;
+  height: 80vh;
   background-color: #21212d;
   padding: 50px;
   border: 2px solid;
@@ -20,9 +21,13 @@
   border-image-source: linear-gradient(45deg, #3c1365, #ff2e63, #08d9d6);
 }
 
-.register-container h1 {
-  color: #eaeaea;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+.Inputs{
+  margin-top: 2rem;
+  text-align: center;
+  justify-content: center;  
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2 ,1fr);
 }
 
 .register-container input {
@@ -34,8 +39,11 @@
   border-bottom: 1px solid #21212d;
   border-radius: 5px;
   margin: 20px;
+  margin-top: 1rem;
   transition: all 1s;
+  text-align: center;
 }
+
 
 .register-container input:hover {
   border: none;
@@ -48,22 +56,97 @@
 
 .register-container button {
   background-color: rgba(15, 15, 15, 0.7);
-  padding: 15px;
+  padding: 14px;
   font-size: 15px;
   border: none;
   color: #e3fef7;
   border-bottom: 1px solid #00adb5;
   border-radius: 5px;
   margin: 20px;
+  margin-top: 5%;
   transition: ease all 0.7s;
 }
 
 .register-container button:hover {
-  padding: 20px;
+  padding: 18px;
   background-color: #00adb5;
   border-bottom: 8px solid rgba(15, 15, 15, 0.7);
+  border-bottom: 1px solid;
+  border-image-slice: 2;
+  color: #e3fef7;
+  border-radius: 50%;
+}
+.container-adm .img-logo-adm{
+  width: 250px;
+  height: 200px;
+  margin-top:0%;
 }
 
 span {
   color: #ff2e63;
+}
+
+
+@media screen and (max-width:768px){
+
+  .container-adm {
+    height: 100%;
+    width: 100%;
+    padding: 0rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0px;
+    margin-left:3rem;
+    width: 400px;
+    height: 100vh;
+    background-color: #21212d;
+    padding: 50px;
+    border: 2px solid;
+    border-image-slice: 2;
+    border-image-source: linear-gradient(45deg, #3c1365, #ff2e63, #08d9d6);
+  }
+  .Inputs{
+    margin-top: 1rem;
+    text-align: center;
+    justify-content: center;  
+    margin-top: 0%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(1 ,1fr);
+  }
+  .register-container input {
+    background-color: rgba(15, 15, 15, 0.7);
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    color: #e3fef7;
+    border-bottom: 1px solid #21212d;
+    border-radius: 5px;
+    margin: 20px;
+    margin-top: 1rem;
+    transition: all 1s;
+    text-align: center;
+  }
+  
+  
+  .register-container input:hover {
+    border: none;
+    border-bottom: 1px solid;
+    border-image-slice: 2;
+    border-image-source: linear-gradient(45deg, #3c1365, #ff2e63, #08d9d6);
+  }
+  
+  .container-adm .img-logo-adm{
+    width: 200px;
+    height: 200px;
+    margin-top:0%;
+  }
 }

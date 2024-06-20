@@ -74,3 +74,36 @@
   color: #eaeaea;
   font-family: "Ubuntu Sans", sans-serif;
 }
+/* Responsividade para telas maiores que 768px */
+@media screen and (max-width: 768px) {
+  .menu {
+    width: 60px; /* Largura reduzida para tornar um menu de navegação */
+    flex-direction: row;
+    justify-content: flex-start;
+    border-right: none;
+    border-bottom: 2px solid;
+  }
+
+  .img-logo {
+    display: none; /* Esconder a logo em telas menores */
+  }
+
+  .menu-content {
+    padding-top: 0;
+    flex: 1; /* Ocupar todo o espaço disponível */
+  }
+
+  .li-link {
+    padding: 10px 20px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .btn-menu {
+    font-size: 25px;
+  }
+
+  .menu-p {
+    display: none; /* Esconder o texto abaixo do ícone */
+  }
+}
