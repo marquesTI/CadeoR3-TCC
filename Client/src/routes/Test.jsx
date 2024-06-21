@@ -1,9 +1,9 @@
-import Sla from "../components/Sla.jsx";
+import Nav from "../components/Nav/Nav";
 
 function Test() {
   return (
     <>
-      <Sla />
+      <Nav />
     </>
   );
 }

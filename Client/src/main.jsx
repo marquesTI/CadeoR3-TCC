@@ -5,7 +5,8 @@ import Home from "./routes/Home/Home.jsx";
 import Admin from "./routes/Admin/Admin.jsx";
 import Register from "./routes/Cliente/Register/Register.jsx";
 import DetalheProduto from "./routes/DetalhesPrd/Detalhes.jsx";
-import Test from "./routes/Test.jsx";
+import Tes from "./routes/Cliente/Register/Test.jsx";
+import Nav from "./routes/Test.jsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -19,7 +20,8 @@ const router = createBrowserRouter([
       { path: "/Admin", element: <Admin /> },
       { path: "/Register", element: <Register /> },
       { path: "/produto/:codbarras", element: <DetalheProduto /> },
-      { path: "/test", element: <Test /> },
+      { path: "/test", element: <Nav /> },
+      { path: "/tes", element: <Tes/> },
     ],
   },
 ]);

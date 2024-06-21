@@ -31,11 +31,6 @@ function Home() {
             <div className="icon-buttom">
               <ul>
                 <li>
-                  <button className="btn-saved">
-                    <FaBookmark />
-                  </button>
-                </li>
-                <li>
                   <button className="btn-cart">
                     <FaShoppingCart />
                   </button>

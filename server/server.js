@@ -74,6 +74,7 @@ app.post("/registerCli", (req, res) => {
     ],
     (err, result) => {
       console.log(err);
+      console.log(result);
     }
   );
 });
@@ -87,7 +88,7 @@ app.post("/search", (req, res) => {
   const { capa } = req.body;
 
   let mysql =
-    "SELECT * from vwProdutos WHERE Nome = ? AND Tipo = ? AND Qtd = ? AND Valor = ? AND CodBarras = ? AND Capa = ?";
+    "SELECT * from TbEstoque WHERE Nome = ? AND Tipo = ? AND Qtd = ? AND Valor = ? AND CodBarras = ? AND Capa = ?";
   db.query(mysql, [nome, tipo, qtd, valor, codbarras, capa], (err, result) => {
     if (err) res.send(err);
     res.send(result);
@@ -97,7 +98,7 @@ app.post("/search", (req, res) => {
 app.get("/produto/:codbarras", (req, res) => {
   const { codbarras } = req.params;
   console.log(`Buscando produto com código de barras: ${codbarras}`); // Adicione este log
-  let mysql = "SELECT * FROM vwProdutos WHERE Codbarras = ?";
+  let mysql = "SELECT * FROM TbEstoque WHERE Codbarras = ?";
   db.query(mysql, [codbarras], (err, result) => {
     if (err) {
       console.error("Erro ao buscar detalhes do produto:", err); // Adicione este log
@@ -114,7 +115,7 @@ app.get("/produto/:codbarras", (req, res) => {
 });
 
 app.get("/getcards", (req, res) => {
-  let SQL = "Select * from vwProdutos";
+  let SQL = "Select * from TbEstoque";
 
   db.query(SQL, (error, result) => {
     if (error) console.log(error);
