@@ -1,12 +1,9 @@
-import * as React from "react";
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import Axios from "axios";
 import "../FormDialog/FormDialog.css";
 
@@ -14,7 +11,12 @@ export default function FormDialog(props) {
   const [editValues, setEditValues] = useState({
     codbarras: props.codbarras,
     nome: props.nome,
+    tipo: props.tipo,
     valor: props.valor,
+    qtd: props.qtd,
+    descricao: props.descricao,
+    estilo: props.estilo,
+    capa: props.capa,
   });
 
   const handleChangeValues = (values) => {
@@ -34,7 +36,12 @@ export default function FormDialog(props) {
     Axios.put("http://localhost:3002/edit", {
       codbarras: editValues.codbarras,
       nome: editValues.nome,
+      tipo: editValues.tipo,
       valor: editValues.valor,
+      qtd: editValues.qtd,
+      descricao: editValues.descricao,
+      estilo: editValues.estilo,
+      capa: editValues.capa,
     }).then(() => {
       props.setListCard(
         props.listCard.map((value) => {
@@ -42,7 +49,12 @@ export default function FormDialog(props) {
             ? {
                 codbarras: editValues.codbarras,
                 nome: editValues.nome,
+                tipo: editValues.tipo,
                 valor: editValues.valor,
+                qtd: editValues.qtd,
+                descricao: editValues.descricao,
+                estilo: editValues.estilo,
+                capa: editValues.capa,
               }
             : value;
         })
@@ -119,7 +131,8 @@ export default function FormDialog(props) {
             id="qtd"
             label="Quantidade"
             defaultValue={props.qtd}
-            type="text"
+            onChange={handleChangeValues}
+            type="number"
             fullWidth
           />
           <TextField
@@ -138,7 +151,7 @@ export default function FormDialog(props) {
             id="estilo"
             label="Estilo"
             defaultValue={props.estilo}
-            type="number"
+            type="text"
             onChange={handleChangeValues}
             fullWidth
           />

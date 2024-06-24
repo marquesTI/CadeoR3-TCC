@@ -15,6 +15,7 @@ function Card(props) {
         valor={props.valor}
         descricao={props.descricao}
         estilo={props.estilo}
+        capa={props.capa}
         qtd={props.qtd}
         listCard={props.listCard}
         setListCard={props.setListCard}
@@ -24,7 +25,6 @@ function Card(props) {
         <img src={props.capa} alt="Imagem produto" />
         <h1 className="card-title">{props.nome}</h1>
         <h1 className="card-title">{props.codbarras}</h1>
-        <p className="card-id">{props.valor}</p>
         <p className="card-id">{props.valor}</p>
         <p className="card-cartegory">{props.tipo}</p>
       </div>

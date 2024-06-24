@@ -12,6 +12,7 @@
   align-items: center;
   justify-content: center;
   position: fixed;
+  z-index: 9;
 }
 
 .img-logo {
@@ -30,14 +31,14 @@
 }
 
 .li-link {
-
   display: flex;
   gap: 14px;
   padding: 30px;
   align-items: center;
 }
 
-.li-link, button {
+.li-link,
+button {
   cursor: pointer;
 }
 

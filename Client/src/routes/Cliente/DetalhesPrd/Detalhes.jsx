@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import "../DetalhesPrd/Detalhes.css";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useCarrinho } from "../../context/CarrinhoContext"; // Importe o contexto do carrinho
+import axios from "axios";
+import { useCart } from "../../../context/CarrinhoContext";
+import "./Detalhes.css";
 
 function DetalheProduto() {
   const { codbarras } = useParams();
   const [produto, setProduto] = useState(null);
   const [error, setError] = useState(null);
-  const { adicionarAoCarrinho } = useCarrinho(); // Utilize o contexto do carrinho
+  const { addToCart } = useCart();
 
   useEffect(() => {
     console.log(`Fetching details for produto with codbarras: ${codbarras}`);
@@ -23,10 +23,6 @@ function DetalheProduto() {
         setError(error);
       });
   }, [codbarras]);
-
-  const handleComprar = () => {
-    adicionarAoCarrinho(produto);
-  };
 
   if (error) {
     return (
@@ -50,7 +46,7 @@ function DetalheProduto() {
         <p>Valor: R${produto.Valor}</p>
         <p>Tipo: {produto.Tipo}</p>
         <p>Quantidade: {produto.Qtd}</p>
-        <button onClick={handleComprar}>Compre já</button>
+        <button onClick={() => addToCart(produto)}>Compre já</button>
       </div>
     </div>
   );

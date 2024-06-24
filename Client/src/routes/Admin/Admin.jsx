@@ -129,12 +129,13 @@ function Admin() {
 
       {listCard.map((val) => (
         <Cards
+          key={val.CodBarras} // A propriedade `key` deve ser única
           listCard={listCard}
           setListCard={setListCard}
-          key={val.CodBarras}
           codbarras={val.CodBarras}
           nome={val.Nome}
           tipo={val.Tipo}
+          estilo={val.Estilo}
           qtd={val.Qtd}
           descricao={val.Descricao}
           valor={val.Valor}

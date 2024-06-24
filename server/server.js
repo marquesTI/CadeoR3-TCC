@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
 
 const db = mysql.createPool({
   host: "localhost",
@@ -36,7 +37,7 @@ app.post("/register", (req, res) => {
   );
 });
 
-app.post("/registerCli", (req, res) => {
+app.post("/registerCli", async (req, res) => {
   const { nome } = req.body;
   const { email } = req.body;
   const { login } = req.body;
@@ -54,13 +55,15 @@ app.post("/registerCli", (req, res) => {
 
   let SQL = "CALL RegCli  ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?  )";
 
+  const hashedPassword = await bcrypt.hash(senha, 10);
+
   db.query(
     SQL,
     [
       nome,
       email,
       login,
-      senha,
+      hashedPassword,
       tel,
       cpf,
       rg,
@@ -74,6 +77,7 @@ app.post("/registerCli", (req, res) => {
     ],
     (err, result) => {
       console.log(err);
+      console.log(result);
     }
   );
 });
@@ -83,11 +87,12 @@ app.post("/search", (req, res) => {
   const { tipo } = req.body;
   const { qtd } = req.body;
   const { valor } = req.body;
+  const { descricao } = req.body;
   const { codbarras } = req.body;
   const { capa } = req.body;
 
   let mysql =
-    "SELECT * from vwProdutos WHERE Nome = ? AND Tipo = ? AND Qtd = ? AND Valor = ? AND CodBarras = ? AND Capa = ?";
+    "SELECT * from TbEstoque WHERE Nome = ? AND Tipo = ? AND Qtd = ? AND Descricao = AND Valor = ? AND CodBarras = ? AND Capa = ?";
   db.query(mysql, [nome, tipo, qtd, valor, codbarras, capa], (err, result) => {
     if (err) res.send(err);
     res.send(result);
@@ -97,7 +102,7 @@ app.post("/search", (req, res) => {
 app.get("/produto/:codbarras", (req, res) => {
   const { codbarras } = req.params;
   console.log(`Buscando produto com código de barras: ${codbarras}`); // Adicione este log
-  let mysql = "SELECT * FROM vwProdutos WHERE Codbarras = ?";
+  let mysql = "SELECT * FROM TbEstoque WHERE Codbarras = ?";
   db.query(mysql, [codbarras], (err, result) => {
     if (err) {
       console.error("Erro ao buscar detalhes do produto:", err); // Adicione este log
@@ -114,7 +119,7 @@ app.get("/produto/:codbarras", (req, res) => {
 });
 
 app.get("/getcards", (req, res) => {
-  let SQL = "Select * from vwProdutos";
+  let SQL = "Select * from TbEstoque";
 
   db.query(SQL, (error, result) => {
     if (error) console.log(error);
@@ -122,22 +127,31 @@ app.get("/getcards", (req, res) => {
   });
 });
 
-
 app.put("/edit", (req, res) => {
   const { codbarras } = req.body;
   const { nome } = req.body;
+  const { valor } = req.body;
   const { tipo } = req.body;
+  const { qtd } = req.body;
+  const { descricao } = req.body;
+  const { estilo } = req.body;
+  const { capa } = req.body;
 
-  let mysql = "UPDATE TbEstoque SET Nome = ?, Tipo = ? WHERE CodBarras = ?";
-  db.query(mysql, [nome, tipo, codbarras], (err, result) => {
-    if (err) {
-      res.send(err);
-      console.log(err)
-    } else {
-      res.send(result);
-      console.log(res)
+  let mysql =
+    "UPDATE TbEstoque SET Nome = ?, Valor = ?, Tipo = ?, Qtd = ?, Descricao = ?, Estilo = ?, Capa = ?  WHERE CodBarras = ?";
+  db.query(
+    mysql,
+    [nome, valor, tipo, qtd, descricao, estilo, capa, codbarras],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+        console.log(err);
+      } else {
+        res.send(result);
+        console.log(res);
+      }
     }
-  });
+  );
 });
 
 app.delete("/delete/:codbarras", (req, res) => {
