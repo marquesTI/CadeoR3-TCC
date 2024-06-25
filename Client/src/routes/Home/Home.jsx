@@ -19,7 +19,7 @@ function Home() {
   }, []);
   return (
     <>
-      <div className="container">
+      <div className="container-home">
         <div className="menu">
           <Menu />
         </div>

@@ -36,7 +36,7 @@ function Register() {
 
   return (
     <>
-      <Container maxW="container.sm" centerContent className="container">
+      <Container maxW="container.sm" centerContent className="container-register">
         <div className=".wrapper">
       <div className="img-logo">
         <img src={Logo} alt="Logo" className="logo" />

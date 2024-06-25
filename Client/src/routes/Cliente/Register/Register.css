@@ -5,13 +5,12 @@ body, html {
 
 
 
-.container {
+.container-register {
     margin-top: 1rem;
     margin-left: 40rem;
     width: 500px; /* Largura fixa do contêiner */
-    height: 55rem; /* Altura fixa do contêiner */
+    height: 60rem; /* Altura fixa do contêiner */
     background-color:black; /* Cor de fundo para visualização */
-
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
     border-right: 2px solid;
     border-width: 2px;
@@ -22,35 +21,44 @@ body, html {
     text-align: center  ;
 }
 
-.container .logo{
-    margin-left: 10px;
-    margin-top: 0;
-    width: 200px;
+.container-register .img-logo{
+    margin-left:80px;
+    margin-top:0;
+    width: 250px;
     height: 200px;
 }
 .Inputs{
     margin-top: 2rem;
 }
-.container input{
+.container-register input{
     width: 400px;
     height: 30px;
+    cursor: pointer;
     text-align: center;
     margin-top: 1px;
     font-size: 1.2rem;
     border-radius: 2rem;
 }
-.container button{
+.container-register .register-button{
     width: 200px;
-    height: auto;
-    margin-top: 2px;
+    height: 40px;
+    margin-top: 3px;
     font-size: 1.2rem;
     border-radius: 1rem;
+}
+.container-register .register-button:hover{
+    width: 200px;
+    height: 40px;
+    margin-top: 2px;
+    font-size: 1.2rem;
+    background-color: #08d9d6;
+    border-radius: 4rem;
 }
 
 
 @media screen and (max-width:768px){
 
-    .container {
+    .container-register {
         margin-top: 0rem;
         margin-left: 10rem;
         width: 400px; /* Largura fixa do contêiner */
@@ -67,16 +75,16 @@ body, html {
         text-align: center  ;
     }
     
-    .container .logo{
-        margin-left: 10px;
+    .container-register .img-logo{
+        margin-left: 40px;
         margin-top: 0rem;
         width: 250px;
         height: 250px;
     }
     .Inputs{
-        margin-top: 5rem;
+        margin-top: 1rem;
     }
-    .container input{
+    .container-register input{
         width: 300px;
         height: 30px;
         text-align: center;
@@ -84,12 +92,19 @@ body, html {
         font-size: 1rem;
         border-radius: 2rem;
     }
-    .container button{
+    .container-register .register-button{
         width: 200px;
-        height: auto;
+        height: 40px;
         margin-top: 10px;
         font-size: 1.4rem;
-        border-radius: 1rem;
+        border-radius: 4rem;
+    }
+    .container-register .register-button:hover{
+        width: 200px;
+        height: 40px;
+        margin-top:10px;
+        font-size: 1.4rem;
+        background-color: #08d9d6;
     }
     
 }
