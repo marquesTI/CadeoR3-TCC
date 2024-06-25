@@ -33,7 +33,7 @@ export default function FormDialog(props) {
 
   const handleEditGame = () => {
     console.log("Valores editados:", editValues);
-    Axios.put("http://localhost:3002/edit", {
+    Axios.put("http://localhost:3001/edit", {
       codbarras: editValues.codbarras,
       nome: editValues.nome,
       tipo: editValues.tipo,
@@ -65,7 +65,7 @@ export default function FormDialog(props) {
   };
 
   const handleDeleteGame = () => {
-    Axios.delete(`http://localhost:3002/delete/${editValues.codbarras}`).then(
+    Axios.delete(`http://localhost:3001/delete/${editValues.codbarras}`).then(
       () => {
         props.setListCard(
           props.listCard.filter((value) => {

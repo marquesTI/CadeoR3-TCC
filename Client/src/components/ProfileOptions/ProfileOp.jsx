@@ -1,15 +1,16 @@
 import "../ProfileOptions/ProfileOp.css";
+import { Link } from "react-router-dom";
 
 function ProfileOptions({ onClose }) {
   return (
     <div className="profile-options">
       <ul>
         <li>Login</li>
-        <li>Registrar-se</li>
+        <li>
+          <Link to="/Register">Registrar-se</Link>
+        </li>
+        <li onClick={onClose}>Fechar</li>
       </ul>
-      <button className="close-button" onClick={onClose}>
-        Fechar
-      </button>
     </div>
   );
 }

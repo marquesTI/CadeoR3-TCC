@@ -42,7 +42,7 @@ function Register() {
 
     console.log(dataToSend);
 
-    Axios.post("http://localhost:3002/registerCli", dataToSend)
+    Axios.post("http://localhost:3001/registerCli", dataToSend)
       .then(() => {
         alert("Cadastro realizado com sucesso!");
         setValues(initialFormValues); // Limpa os campos do formulário após o cadastro

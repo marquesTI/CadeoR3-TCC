@@ -8,7 +8,7 @@ function Admin() {
   const [listCard, setListCard] = useState([]);
   console.log(listCard);
   const handleRegisterGame = () => {
-    Axios.post("http://localhost:3002/register", {
+    Axios.post("http://localhost:3001/register", {
       codbarras: values.codbarras,
       nome: values.nome,
       qtd: values.qtd,
@@ -18,7 +18,7 @@ function Admin() {
       estilo: values.estilo,
       capa: values.capa,
     }).then(() => {
-      Axios.post("http://localhost:3002/search", {
+      Axios.post("http://localhost:3001/search", {
         codbarras: values.codbarras,
         qtd: values.qtd,
         tipo: values.tipo,
@@ -46,7 +46,7 @@ function Admin() {
   };
 
   useEffect(() => {
-    Axios.get("http://localhost:3002/getCards").then((response) => {
+    Axios.get("http://localhost:3001/getCards").then((response) => {
       setListCard(response.data);
     });
   }, []);

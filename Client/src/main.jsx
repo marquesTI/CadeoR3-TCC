@@ -6,8 +6,9 @@ import Home from "./routes/Cliente/Home/Home.jsx";
 import Admin from "./routes/Admin/Admin.jsx";
 import Register from "./routes/Cliente/Register/Register.jsx";
 import DetalheProduto from "./routes/Cliente/DetalhesPrd/Detalhes.jsx";
-import Test from "./routes/Test.jsx";
 import Cart from "./routes/Cliente/Cart/Cart.jsx";
+import Login from "./routes/Cliente/Login/Login.jsx";
+import Checkout from "./routes/Cliente/Checkout/Checkout.jsx";
 import { CartProvider } from "./context/CarrinhoContext.jsx";
 
 const router = createBrowserRouter([
@@ -20,7 +21,8 @@ const router = createBrowserRouter([
       { path: "/Register", element: <Register /> },
       { path: "/produto/:codbarras", element: <DetalheProduto /> },
       { path: "/cart", element: <Cart /> },
-      { path: "/test", element: <Test /> },
+      { path: "/login", element: <Login /> },
+      { path: "/checkout", element: <Checkout /> },
     ],
   },
 ]);

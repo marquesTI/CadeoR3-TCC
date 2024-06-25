@@ -13,7 +13,7 @@ function DetalheProduto() {
   useEffect(() => {
     console.log(`Fetching details for produto with codbarras: ${codbarras}`);
     axios
-      .get(`http://localhost:3002/produto/${codbarras}`)
+      .get(`http://localhost:3001/produto/${codbarras}`)
       .then((response) => {
         console.log("Dados do produto recebidos:", response.data);
         setProduto(response.data);

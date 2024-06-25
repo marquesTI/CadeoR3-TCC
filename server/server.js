@@ -4,6 +4,8 @@ const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 const db = mysql.createPool({
   host: "localhost",
@@ -15,6 +17,17 @@ const db = mysql.createPool({
 
 app.use(cors());
 app.use(express.json());
+
+const authenticateToken = (req, res, next) => {
+  const token = req.headers["authorization"];
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, "secret_key", (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+};
 
 app.post("/register", (req, res) => {
   const { codbarras } = req.body;
@@ -80,6 +93,86 @@ app.post("/registerCli", async (req, res) => {
       console.log(result);
     }
   );
+});
+
+const JWT_SECRET = "your_secret_key_here";
+
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+
+  db.query(
+    "SELECT * FROM TbLogin WHERE Login = ?",
+    [username],
+    async (err, results) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Erro interno no servidor");
+      }
+
+      if (results.length === 0) {
+        return res.status(400).send("Usuário não encontrado!");
+      }
+
+      const user = results[0];
+      const passwordMatch = await bcrypt.compare(password, user.Senha);
+
+      if (!passwordMatch) {
+        return res.status(403).send("Senha incorreta!");
+      }
+
+      const accessToken = jwt.sign({ username: user.Login }, JWT_SECRET);
+      res.json({ accessToken });
+    }
+  );
+});
+
+app.post("/completePurchase", authenticateToken, (req, res) => {
+  const { vNf, vCodBarras, vTipoPagamento, vQtdDesejada } = req.body;
+  const vNomeCli = req.user.username; // Pegando o nome do cliente do token
+
+  const query = `CALL RegVenda(?, ?, ?, ?, ?)`;
+  db.query(
+    query,
+    [vNf, vNomeCli, vCodBarras, vTipoPagamento, vQtdDesejada],
+    (error, results) => {
+      if (error) {
+        return res.status(500).json({ error: true, message: error.message });
+      }
+
+      const email = results[0][0].Email; // Supondo que a procedure retorna o e-mail do cliente
+
+      // Configurar o nodemailer para enviar e-mails
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "cadeor3@gmail.com",
+          pass: "sua_senha",
+        },
+      });
+
+      const mailOptions = {
+        from: "cadeor3@gmail.com",
+        to: email,
+        subject: "Compra realizada com sucesso",
+        text: "Obrigado por sua compra!",
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return res.status(500).json({ error: true, message: error.message });
+        }
+        res.json({
+          error: false,
+          message: "Compra realizada com sucesso e e-mail enviado.",
+        });
+      });
+    }
+  );
+});
+
+// Rota protegida (exemplo)
+app.get("/profile", authenticateToken, (req, res) => {
+  res.send("This is a protected route");
 });
 
 app.post("/search", (req, res) => {
@@ -166,6 +259,6 @@ app.delete("/delete/:codbarras", (req, res) => {
   });
 });
 
-app.listen(3002, () => {
+app.listen(3001, () => {
   console.log("Rodando o servidor");
 });
