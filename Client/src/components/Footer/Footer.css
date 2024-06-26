@@ -1,0 +1,29 @@
+.footer {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.733);
+  color: white;
+  padding: 2rem 0;
+  height: 10rem;
+  position: absolute;
+  width: 100%;
+  height: auto;
+  z-index: 0;
+}
+.text-footer {
+  opacity: 0.8;
+  margin-left: 10%;
+  color: white;
+  display: inline-flex;
+  padding: 0%;
+  justify-content: center;
+  margin-top: 10px;
+}
+.container-footer {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+.logo-footer {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}

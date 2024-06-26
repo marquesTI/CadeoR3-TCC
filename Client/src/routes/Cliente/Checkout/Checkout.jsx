@@ -1,19 +1,56 @@
 import { useState } from "react";
 import { useCart } from "../../../context/CarrinhoContext";
 import { useNavigate } from "react-router-dom";
-import "../Checkout/Checkout.css";
-import axios from "axios";
+import InputMask from "react-input-mask";
+import "./Checkout.css";
 
 function Checkout() {
   const { cartItems, clearCart } = useCart();
   const [tipoPagamento, setTipoPagamento] = useState("Pix");
+  const [creditCardInfo, setCreditCardInfo] = useState({
+    number: "",
+    name: "",
+    expiry: "",
+    cvv: "",
+  });
+  const [randomNumber, setRandomNumber] = useState(generateRandomNumber());
   const navigate = useNavigate();
+
+  function generateRandomNumber() {
+    return Math.floor(Math.random() * 9000000000) + 1000000000;
+  }
 
   const handlePaymentChange = (event) => {
     setTipoPagamento(event.target.value);
+    if (event.target.value === "Pix" || event.target.value === "Débito") {
+      setRandomNumber(generateRandomNumber());
+    }
   };
 
-  const handlePurchase = async () => {
+  const handleCreditCardChange = (event) => {
+    const { name, value } = event.target;
+    setCreditCardInfo((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const validateFields = () => {
+    if (tipoPagamento === "Credito") {
+      if (
+        !creditCardInfo.number ||
+        !creditCardInfo.name ||
+        !creditCardInfo.expiry ||
+        !creditCardInfo.cvv
+      ) {
+        alert("Por favor, preencha todas as informações do cartão de crédito.");
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const handlePurchase = () => {
     const token = localStorage.getItem("token");
     if (!token) {
       alert("Você precisa estar logado para finalizar a compra.");
@@ -21,39 +58,19 @@ function Checkout() {
       return;
     }
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/completePurchase",
-        {
-          vNf: 1,
-          vCodBarras: cartItems.map((item) => item.codbarras),
-          vTipoPagamento: tipoPagamento,
-          vQtdDesejada: cartItems.map((item) => item.qtd),
-        },
-        {
-          headers: { Authorization: token },
-        }
-      );
-
-      if (response.data.error) {
-        alert(response.data.message);
-      } else {
-        alert("Compra realizada com sucesso!");
-        clearCart();
-        navigate("/");
-      }
-    } catch (error) {
-      console.error("Erro ao finalizar a compra:", error);
-      alert("Erro ao finalizar a compra. Por favor, tente novamente.");
+    if (!validateFields()) {
+      return;
     }
-  };
 
-  console.log(handlePurchase);
+    alert("Compra realizada com sucesso!");
+    clearCart();
+    navigate("/");
+  };
 
   return (
     <div className="container-check">
       <h2>Finalizar Compra</h2>
-      <div>
+      <div className="ctn">
         <label>
           Tipo de Pagamento:
           <select value={tipoPagamento} onChange={handlePaymentChange}>
@@ -63,8 +80,64 @@ function Checkout() {
             <option value="Saldo">Saldo</option>
           </select>
         </label>
+        {tipoPagamento === "Credito" && (
+          <div className="credit-card-info">
+            <label>
+              Número do Cartão:
+              <InputMask
+                mask="9999 9999 9999 9999"
+                value={creditCardInfo.number}
+                onChange={handleCreditCardChange}
+                name="number"
+                className="input-check"
+              />
+            </label>
+            <label>
+              Nome no Cartão:
+              <input
+                type="text"
+                value={creditCardInfo.name}
+                onChange={handleCreditCardChange}
+                name="name"
+                className="input-check"
+              />
+            </label>
+            <label>
+              Validade:
+              <InputMask
+                mask="99/99"
+                value={creditCardInfo.expiry}
+                onChange={handleCreditCardChange}
+                name="expiry"
+                className="input-check"
+              />
+            </label>
+            <label>
+              CVV:
+              <InputMask
+                mask="999"
+                value={creditCardInfo.cvv}
+                onChange={handleCreditCardChange}
+                name="cvv"
+                className="input-check"
+              />
+            </label>
+          </div>
+        )}
+
+        {(tipoPagamento === "Pix" || tipoPagamento === "Débito") && (
+          <div>
+            <label>
+              Código para Pagamento:
+              <input type="text" value={randomNumber} disabled />
+            </label>
+          </div>
+        )}
       </div>
-      <button onClick={handlePurchase}>Finalizar Compra</button>
+
+      <button className="btn-finish" onClick={handlePurchase}>
+        Finalizar Compra
+      </button>
     </div>
   );
 }

@@ -8,9 +8,9 @@ function Register() {
     email: "",
     login: "",
     senha: "",
-    tel: null,
-    cpf: null,
-    rg: null,
+    tel: "",
+    cpf: "",
+    rg: "",
     cnpj: null,
     ie: null,
     cep: "",
@@ -28,9 +28,9 @@ function Register() {
       email: values.email,
       login: values.login,
       senha: values.senha,
-      tel: values.tel === null ? 0 : values.tel,
-      cpf: values.cpf === null ? 0 : values.cpf,
-      rg: values.rg === null ? 0 : values.rg,
+      tel: values.tel.replace(/\D/g, ""), // Remove caracteres não numéricos do telefone
+      cpf: values.cpf.replace(/\D/g, ""), // Remove caracteres não numéricos do CPF
+      rg: values.rg.replace(/\D/g, ""), // Remove caracteres não numéricos do RG
       cnpj: values.cnpj === null ? 0 : values.cnpj,
       ie: values.ie === null ? 0 : values.ie,
       cep: values.cep,
@@ -50,14 +50,72 @@ function Register() {
       .catch((error) => {
         console.error("Erro ao cadastrar:", error);
       });
-    document.location.reload();
+  };
+
+  const handleClearFields = () => {
+    setValues(initialFormValues);
   };
 
   const handleaddValues = (e) => {
     const { name, value } = e.target;
+
+    // Aplica a máscara no campo de telefone
+    if (name === "tel") {
+      let formattedValue = value.replace(/\D/g, ""); // Remove caracteres não numéricos
+      formattedValue = formattedValue.slice(0, 11); // Limita o telefone para 11 dígitos
+
+      if (formattedValue.length > 2) {
+        formattedValue = `(${formattedValue.slice(
+          0,
+          2
+        )}) ${formattedValue.slice(2)}`;
+      }
+
+      if (formattedValue.length > 7) {
+        formattedValue = `${formattedValue.slice(0, 9)}-${formattedValue.slice(
+          9
+        )}`;
+      }
+
+      setValues((prevValues) => ({
+        ...prevValues,
+        [name]: formattedValue,
+      }));
+    } else {
+      setValues((prevValues) => ({
+        ...prevValues,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleCPFChange = (e) => {
+    let value = e.target.value;
+    // Aplica a máscara CPF: 000.000.000-00
+    value = value.replace(/\D/g, ""); // Remove caracteres não numéricos
+    value = value.slice(0, 11); // Limita o CPF para 11 dígitos
+    value = value.replace(/(\d{3})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
     setValues((prevValues) => ({
       ...prevValues,
-      [name]: value,
+      cpf: value, // Atualiza o estado com o CPF formatado
+    }));
+  };
+
+  const handleRGChange = (e) => {
+    let value = e.target.value;
+    // Aplica a máscara RG: 00.000.000-0
+    value = value.replace(/\D/g, ""); // Remove caracteres não numéricos
+    value = value.slice(0, 9); // Limita o RG para 9 dígitos
+    value = value.replace(/(\d{2})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d{1})$/, "$1-$2");
+
+    setValues((prevValues) => ({
+      ...prevValues,
+      rg: value, // Atualiza o estado com o RG formatado
     }));
   };
 
@@ -80,7 +138,7 @@ function Register() {
   return (
     <div className="form">
       <fieldset>
-        <legend>Dados</legend>
+        <legend>CADASTRE=SE</legend>
         <div>
           <input
             type="text"
@@ -123,7 +181,7 @@ function Register() {
             name="tel"
             placeholder="Telefone"
             className="input-register"
-            value={values.tel === null ? "" : values.tel}
+            value={values.tel}
             onChange={handleaddValues}
           />
 
@@ -132,8 +190,9 @@ function Register() {
             name="cpf"
             placeholder="CPF"
             className="input-register"
-            value={values.cpf === null ? "" : values.cpf}
-            onChange={handleaddValues}
+            value={values.cpf}
+            onChange={handleCPFChange}
+            required
           />
 
           <input
@@ -141,8 +200,9 @@ function Register() {
             name="rg"
             placeholder="RG"
             className="input-register"
-            value={values.rg === null ? "" : values.rg}
-            onChange={handleaddValues}
+            value={values.rg}
+            onChange={handleRGChange}
+            required
           />
 
           <input
@@ -220,6 +280,9 @@ function Register() {
         </div>
         <button onClick={handleRegisterCli} className="register-button">
           Cadastrar
+        </button>
+        <button onClick={handleClearFields} className="clear-button">
+          Limpar Campos
         </button>
       </fieldset>
     </div>

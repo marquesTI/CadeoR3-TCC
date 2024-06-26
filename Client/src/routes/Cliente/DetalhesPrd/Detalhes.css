@@ -2,26 +2,211 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  margin-left: 15%;
+  padding-top: 100px;
+  position: relative;
+  width: 80%;
   height: 100vh;
-  gap: 100px;
+  gap: 0px;
+  background: #00000072;
 }
 
 .conteudo-img {
   width: 800px;
+  margin-left: 6rem;
 }
+.txt-detalhes {
+  margin-left: 2.5rem;
+  font-size: 2rem;
+  padding: 0.4rem;
+  color: white;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+.txt-detalhes-v {
+  width: 100%;
+  font-size: 2rem;
+  padding-top: 2rem;
+  margin-left: 6rem;
+  font-weight: bold;
+}
+.txt-detalhes-m {
+  width: 20rem;
+  color: #08d9d6;
+  padding-top: 1rem;
+  font-size: 1.5rem;
+  margin-left: 6rem;
 
+  border-radius: 20px;
+}
+.txt-detalhes-e {
+  width: 20rem;
+  color: #ff2e63;
+  padding-top: 1rem;
+  font-size: 1.5rem;
+  margin-left: 6rem;
+  border-radius: 20px;
+}
+.txt-detalhes-btn {
+  margin-top: 10px;
+  width: 20rem;
+  padding: 0;
+  margin-left: 0rem;
+  border-radius: 200%;
+}
+.btn {
+  width: 22rem;
+  height: 3rem;
+  margin-top: 10rem;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 2rem;
+  margin-right: 10rem;
+  border-radius: 20px;
+  display: flex;
+  text-transform: uppercase;
+  text-align: center;
+  justify-content: center;
+}
+.btn-d {
+  width: 20rem;
+  height: 3rem;
+  margin-top: 10rem;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0.7rem;
+  margin-right: 10rem;
+  border-radius: 20px;
+  display: flex;
+  text-transform: unset;
+  text-align: center;
+  justify-content: center;
+}
+.btn-d:hover {
+  font-weight: bold;
+  background: linear-gradient(to right, #3c1365, #ff2e63, #08d9d6);
+  -webkit-background-clip: text;
+  color: white;
+}
 .conteudo-img img {
-  width: 600px;
+  width: 800px;
   height: 100%;
   border-radius: 13px;
+  margin-left: 5rem;
   filter: drop-shadow(8px 6px 8px #000000);
 }
 
 .conteudo-info {
-  width: 300px;
+  width: 200px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   color: #fcfff7;
+}
+@media screen and (max-width: 768px) {
+  .container-detalhes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 15%;
+    padding-top: 100px;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    gap: 0px;
+    background: #00000072;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .conteudo-img {
+    width: 800px;
+    margin-left: 20rem;
+  }
+  .txt-detalhes {
+    margin-left: 15rem;
+    font-size: 2rem;
+    padding: 0.4rem;
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+      sans-serif;
+  }
+  .txt-detalhes-v {
+    width: 100%;
+    font-size: 2rem;
+    padding-top: 2rem;
+    margin-left: 30rem;
+    font-weight: bold;
+  }
+  .txt-detalhes-m {
+    width: 20rem;
+    color: #08d9d6;
+    padding-top: 1rem;
+    font-size: 1.5rem;
+    margin-left: 26rem;
+
+    border-radius: 20px;
+  }
+  .txt-detalhes-e {
+    width: 20rem;
+    color: #ff2e63;
+    padding-top: 1rem;
+    font-size: 1.5;
+    margin-left: 25rem;
+    border-radius: 20px;
+  }
+  .txt-detalhes-btn {
+    margin-top: 10px;
+    width: 20rem;
+    padding: 0;
+    margin-left: 20rem;
+    border-radius: 200%;
+  }
+  .btn {
+    width: 22rem;
+    height: 3rem;
+    margin-top: 10rem;
+    padding-left: 0;
+    margin-left: 20rem;
+    padding-right: 0;
+    padding-top: 2rem;
+    margin-right: 20rem;
+    border-radius: 20px;
+    display: flex;
+    text-transform: uppercase;
+    text-align: center;
+    justify-content: center;
+  }
+  .btn-d {
+    width: 20rem;
+    height: 3rem;
+    margin-top: 10rem;
+    padding-left: 0rem;
+    padding-right: 0rem;
+    padding-top: 0.7rem;
+    border-radius: 20px;
+    display: flex;
+    text-transform: unset;
+    text-align: center;
+    justify-content: center;
+  }
+  .btn-d:hover {
+    font-weight: bold;
+    background: linear-gradient(to right, #3c1365, #ff2e63, #08d9d6);
+    -webkit-background-clip: text;
+    color: white;
+  }
+  .conteudo-img img {
+    width: 300px;
+    height: 100%;
+    border-radius: 13px;
+    margin-left: 5rem;
+    filter: drop-shadow(8px 6px 8px #000000);
+  }
+
+  .conteudo-info {
+    width: 200px;
+    display: flex;
+    color: #fcfff7;
+  }
 }

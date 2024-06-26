@@ -22,7 +22,7 @@ const authenticateToken = (req, res, next) => {
   const token = req.headers["authorization"];
   if (token == null) return res.sendStatus(401);
 
-  jwt.verify(token, "secret_key", (err, user) => {
+  jwt.verify(token, "your_secret_key_here", (err, user) => {
     if (err) return res.sendStatus(403);
     req.user = user;
     next();
@@ -30,14 +30,8 @@ const authenticateToken = (req, res, next) => {
 };
 
 app.post("/register", (req, res) => {
-  const { codbarras } = req.body;
-  const { nome } = req.body;
-  const { qtd } = req.body;
-  const { tipo } = req.body;
-  const { descricao } = req.body;
-  const { valor } = req.body;
-  const { estilo } = req.body;
-  const { capa } = req.body;
+  const { codbarras, nome, qtd, tipo, descricao, valor, estilo, capa } =
+    req.body;
 
   let SQL = "CALL RegProduto  ( ?, ?, ?, ?, ?, ?, ?, ?  )";
 
@@ -45,26 +39,32 @@ app.post("/register", (req, res) => {
     SQL,
     [codbarras, nome, qtd, tipo, descricao, valor, estilo, capa],
     (err, result) => {
-      console.log(err);
+      if (err) {
+        console.log(err);
+        return res.status(500).send("Erro ao registrar produto");
+      }
+      res.send(result);
     }
   );
 });
 
 app.post("/registerCli", async (req, res) => {
-  const { nome } = req.body;
-  const { email } = req.body;
-  const { login } = req.body;
-  const { senha } = req.body;
-  const { tel } = req.body;
-  const { cpf } = req.body;
-  const { rg } = req.body;
-  const { cnpj } = req.body;
-  const { ie } = req.body;
-  const { cep } = req.body;
-  const { logradouro } = req.body;
-  const { uf } = req.body;
-  const { cidade } = req.body;
-  const { numero } = req.body;
+  const {
+    nome,
+    email,
+    login,
+    senha,
+    tel,
+    cpf,
+    rg,
+    cnpj,
+    ie,
+    cep,
+    logradouro,
+    uf,
+    cidade,
+    numero,
+  } = req.body;
 
   let SQL = "CALL RegCli  ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?  )";
 
@@ -89,8 +89,11 @@ app.post("/registerCli", async (req, res) => {
       numero,
     ],
     (err, result) => {
-      console.log(err);
-      console.log(result);
+      if (err) {
+        console.log(err);
+        return res.status(500).send("Erro ao registrar cliente");
+      }
+      res.send(result);
     }
   );
 });
@@ -120,54 +123,31 @@ app.post("/login", (req, res) => {
         return res.status(403).send("Senha incorreta!");
       }
 
-      const accessToken = jwt.sign({ username: user.Login }, JWT_SECRET);
+      const accessToken = jwt.sign({ username: user.Login }, JWT_SECRET, {
+        expiresIn: "15m",
+      });
       res.json({ accessToken });
     }
   );
 });
+app.post("/finalizar-compra", async (req, res) => {
+  const { vNf, vNomeCli, vCodBarras, vTipoPagamento, vQtdDesejada } = req.body;
 
-app.post("/completePurchase", authenticateToken, (req, res) => {
-  const { vNf, vCodBarras, vTipoPagamento, vQtdDesejada } = req.body;
-  const vNomeCli = req.user.username; // Pegando o nome do cliente do token
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.query(`CALL RegVenda(?, ?, ?, ?, ?)`, [
+      vNf,
+      vNomeCli,
+      vCodBarras,
+      vTipoPagamento,
+      vQtdDesejada,
+    ]);
+    await connection.end();
 
-  const query = `CALL RegVenda(?, ?, ?, ?, ?)`;
-  db.query(
-    query,
-    [vNf, vNomeCli, vCodBarras, vTipoPagamento, vQtdDesejada],
-    (error, results) => {
-      if (error) {
-        return res.status(500).json({ error: true, message: error.message });
-      }
-
-      const email = results[0][0].Email; // Supondo que a procedure retorna o e-mail do cliente
-
-      // Configurar o nodemailer para enviar e-mails
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: "cadeor3@gmail.com",
-          pass: "sua_senha",
-        },
-      });
-
-      const mailOptions = {
-        from: "cadeor3@gmail.com",
-        to: email,
-        subject: "Compra realizada com sucesso",
-        text: "Obrigado por sua compra!",
-      };
-
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return res.status(500).json({ error: true, message: error.message });
-        }
-        res.json({
-          error: false,
-          message: "Compra realizada com sucesso e e-mail enviado.",
-        });
-      });
-    }
-  );
+    res.status(200).json(rows);
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao finalizar a compra", error });
+  }
 });
 
 // Rota protegida (exemplo)
@@ -176,13 +156,7 @@ app.get("/profile", authenticateToken, (req, res) => {
 });
 
 app.post("/search", (req, res) => {
-  const { nome } = req.body;
-  const { tipo } = req.body;
-  const { qtd } = req.body;
-  const { valor } = req.body;
-  const { descricao } = req.body;
-  const { codbarras } = req.body;
-  const { capa } = req.body;
+  const { nome, tipo, qtd, valor, descricao, codbarras, capa } = req.body;
 
   let mysql =
     "SELECT * from TbEstoque WHERE Nome = ? AND Tipo = ? AND Qtd = ? AND Descricao = AND Valor = ? AND CodBarras = ? AND Capa = ?";
@@ -221,14 +195,8 @@ app.get("/getcards", (req, res) => {
 });
 
 app.put("/edit", (req, res) => {
-  const { codbarras } = req.body;
-  const { nome } = req.body;
-  const { valor } = req.body;
-  const { tipo } = req.body;
-  const { qtd } = req.body;
-  const { descricao } = req.body;
-  const { estilo } = req.body;
-  const { capa } = req.body;
+  const { codbarras, nome, valor, tipo, qtd, descricao, estilo, capa } =
+    req.body;
 
   let mysql =
     "UPDATE TbEstoque SET Nome = ?, Valor = ?, Tipo = ?, Qtd = ?, Descricao = ?, Estilo = ?, Capa = ?  WHERE CodBarras = ?";

@@ -1,0 +1,33 @@
+.logo-sobre {
+  width: 30%;
+  height: 80%;
+  margin-left: 40rem;
+}
+.text-sobre {
+  background: #00000055;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem;
+  height: auto;
+  margin-left: 10rem;
+}
+.text-title {
+  color: rgb(255, 242, 0);
+  text-decoration: underline;
+}
+.text-sobre-L {
+  width: 90%;
+  color: white;
+  text-align: center;
+}
+.duas {
+  margin-top: 5rem;
+  display: inline-flex;
+  padding: 10rem;
+  margin-left: 5rem;
+  padding-block: 2rem;
+}
+.um {
+  text-align: center;
+  background: #00000055;
+}

@@ -14,3 +14,10 @@
   width: 100px;
   justify-content: space-between;
 }
+@media screen and (max-width: 768px) {
+  .btn-nav {
+    display: flex;
+    width: 50px;
+    justify-content: space-between 1px;
+  }
+}

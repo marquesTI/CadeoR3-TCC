@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Background from "../../../assets/img/background.jpg";
 import Carrosel from "../../../components/Carrossel/Carrossel";
 import CardProd from "../../../components/CardProd/CardProd";
 import Axios from "axios";
@@ -9,13 +8,13 @@ function Home() {
   const [listCard, setListCard] = useState([]);
 
   useEffect(() => {
-    Axios.get("http://localhost:3002/getCards").then((response) => {
+    Axios.get("http://localhost:3001/getcards").then((response) => {
       setListCard(response.data);
     });
   }, []);
   return (
     <>
-      <div className="container">
+      <div className="container-home">
         <div className="container-content">
           <Carrosel />
           <div className="cards">
@@ -33,12 +32,6 @@ function Home() {
               />
             ))}
           </div>
-        </div>
-      </div>
-
-      <div className="background-container">
-        <div className="main-container">
-          <img src={Background} alt="" />
         </div>
       </div>
     </>

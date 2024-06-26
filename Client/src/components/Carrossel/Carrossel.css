@@ -3,6 +3,7 @@
   height: 700px;
   border-radius: 20px;
   margin-top: 80px;
+  margin-left: 10rem;
 }
 
 .slider-container img {
@@ -10,4 +11,22 @@
   height: 700px;
   object-fit: cover;
   border-radius: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .slider-container {
+    width: 80%;
+    height: 10vh;
+    border-radius: 20px;
+    margin-top: 80px;
+    margin-left: 1rem;
+  }
+  .slider-container img {
+    width: 94%;
+    height: 30vh;
+    padding-bottom: 4rem;
+    object-fit: cover;
+    position: relative;
+    border-radius: 20px;
+  }
 }
