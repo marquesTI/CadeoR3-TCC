@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS CadeOR3;
 CREATE DATABASE CadeOR3;
 USE CadeOR3;
 
@@ -124,7 +125,7 @@ USE CadeOR3;
         Tipo ENUM('Jogo', 'Cosmetico') NOT NULL,
         Capa TEXT NOT NULL,
         Estilo VARCHAR(150) NOT NULL,
-        Descricao VARCHAR(500) NOT NULL,
+        Descricao VARCHAR(2500) NOT NULL,
         Valor DECIMAL (6,2) NOT NULL
     );
     
@@ -400,7 +401,7 @@ END //
 	DELIMITER ;
     
     DELIMITER //
-		CREATE PROCEDURE RegProduto(IN vCodBarras BIGINT, IN vNome VARCHAR(200), IN vQtd SMALLINT, IN vTipo ENUM('Jogo', 'Cosmetico'), IN vDescricao VARCHAR(500), IN vValor DECIMAL (6,2), IN vEstilo VARCHAR(150), IN vCapa TEXT)
+		CREATE PROCEDURE RegProduto(IN vCodBarras BIGINT, IN vNome VARCHAR(200), IN vQtd SMALLINT, IN vTipo ENUM('Jogo', 'Cosmetico'), IN vDescricao VARCHAR(2500), IN vValor DECIMAL (6,2), IN vEstilo VARCHAR(150), IN vCapa TEXT)
         BEGIN
 			IF NOT EXISTS(SELECT 1 FROM TbEstoque WHERE CodBarras = vCodBarras) THEN
 				IF NOT EXISTS(SELECT 1 FROM TbEstoque WHERE Nome = vNome) THEN
@@ -475,12 +476,7 @@ END //
 					IF vQtdDesejada > QtdDisponivel THEN
 						SELECT CONCAT('Estoque insuficiente, quantidade indisponivel! Produto em estoque: ', QtdDisponivel) AS 'Mensagem';
 					ELSE
-						SELECT Tipo INTO vTipo FROM TbEstoque WHERE CodBarras = vCodBarras;
-						
-						IF vTipo = 'Jogo' THEN
-							SELECT Valor INTO ValorUni FROM TbJogos WHERE CodBarras = vCodBarras;
-						ELSEIF vTipo = 'Cosmetico' THEN
-							SELECT Valor INTO ValorUni FROM TbCosmeticos WHERE CodBarras = vCodBarras;
+						SELECT Valor INTO ValorUni FROM TbEstoque WHERE CodBarras = vCodBarras;
 						END IF;
 						
 						SET vValorTotal = ValorUni * vQtdDesejada;
@@ -523,7 +519,6 @@ END //
 							SELECT 'Venda registrada com sucesso.' AS 'Mensagem';
 						END IF;
 					END IF;
-				END IF;
 			END IF;
 		END IF;
 		END //
@@ -653,3 +648,21 @@ DELIMITER ;
         LEFT JOIN TbPf_Cli Pf ON Cliente.Id = Pf.IdCli
         LEFT JOIN TbPj_Cli Pj ON Cliente.Id = Pj.IdCli;
         
+CALL RegProduto(1234567890123, 'The Legend of Zelda: Breath of the Wild', 30, 'Jogo', 'Esqueça tudo sobre The Legend of Zelda. Em Breath of the Wild, descubra um mundo de exploração e aventura. Viaje por Hyrule, explorando campos, florestas e montanhas. Agora no Nintendo Switch, leve seu console e viva aventuras como Link, onde e como quiser.', 299.90, 'Ação/Aventura', 'https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/software/switch/70010000000025/7137262b5a64d921e193653f8aa0b722925abc5680380ca0e18a5cfd91697f58');
+CALL RegProduto(1234567890124, 'God of War', 25, 'Jogo', 'Kratos é pai novamente. Como mentor e protetor de Atreus, ele é forçado a encarar e controlar a fúria enquanto viaja por um mundo ameaçador.', 199.90, 'Ação/Aventura', 'https://jogandocasualmente.com.br/wp-content/uploads/2022/01/godofwar_cover.jpg');
+CALL RegProduto(1234567890125, 'Red Dead Redemption 2', 20, 'Jogo', 'Estados Unidos, 1899. Arthur Morgan e a gangue Van der Linde fogem dos agentes federais e caçadores de recompensas, precisando roubar e lutar para sobreviver.', 249.90, 'Ação/Aventura', 'https://www.outerspace.com.br/wp-content/uploads/2018/04/reddeadredemption2.jpg');
+CALL RegProduto(1234567890126, 'Minecraft', 50, 'Jogo', 'Explore seus próprios mundos, sobreviva à noite e crie tudo o que puder imaginar!', 149.90, 'Aventura/Construção', 'https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/ncom/software/switch/70010000000964/811461b8d1cacf1f2da791b478dccfe2a55457780364c3d5a95fbfcdd4c3086f');
+CALL RegProduto(1234567890127, 'The Witcher 3: Wild Hunt', 15, 'Jogo', 'Você é Geralt de Rívia, mercenário matador de monstros, em um continente devastado pela guerra, buscando a Criança da Profecia.', 179.90, 'RPG', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1SMVTOps873jSBE9iartw9sKgTzqidZ_dJA&s');
+CALL RegProduto(1234567890129, 'Grand Theft Auto V', 35, 'Jogo', 'Explore o mundo de Los Santos e Blaine County com melhorias técnicas para novos e antigos jogadores.', 199.90, 'Ação/Aventura', 'https://cdn.awsli.com.br/2500x2500/1610/1610163/produto/177700809/poster-grand-theft-auto-v-gta-5-b-5ceeda64.jpg');
+CALL RegProduto(1234567890130, 'Overwatch', 25, 'Jogo', 'Dois times de seis jogadores escolhem entre 30 personagens com estilos de jogo únicos em três papéis gerais.', 99.90, 'FPS', 'https://meups.com.br/wp-content/uploads/2016/04/Overwatch-capa-pr%C3%A9via.jpg');
+CALL RegProduto(1234567890131, 'Call of Duty: Modern Warfare', 20, 'Jogo', 'Experimente uma Campanha visceral e monte sua equipe online com diversos desafios e modos Multijogador.', 249.90, 'FPS', 'https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/kronos/common/social-share/social-share-image.jpg');
+CALL RegProduto(1234567890132, 'EaFc 24', 30, 'Jogo', 'O EA SPORTS FC™ 24 é uma nova era para o futebol com mais de 19.000 atletas licenciados, 700 times e 30 ligas.', 199.90, 'Esportes', 'https://media.contentapi.ea.com/content/dam/ea/fc/fc-24/common/gameplay/fc24-euro-keyart-16x9.png.adapt.1920w.png');
+CALL RegProduto(1234567890133, 'Cyberpunk 2077', 15, 'Jogo', 'Cyberpunk 2077 é um RPG de ação e aventura em mundo aberto, onde você joga como um mercenário cyberpunk em Night City.', 299.90, 'RPG', 'https://sm.ign.com/ign_br/screenshot/default/cyberpunk2077-keyart_8bve.jpg');
+CALL RegProduto(1234567890134, 'Animal Crossing: New Horizons', 30, 'Jogo', 'Escape para uma ilha deserta e crie o seu paraíso, explorando e customizando em Animal Crossing: New Horizons.', 249.90, 'Simulação', 'https://www.showmetech.com.br/wp-content/uploads//2020/03/animal-crossing-capa.jpg');
+CALL RegProduto(1234567890135, 'Super Smash Bros. Ultimate', 25, 'Jogo', 'Personagens icônicos se enfrentam na luta definitiva, com novos lutadores e cenários.', 199.90, 'Luta', 'https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_656/b_white/f_auto/q_auto/ncom/software/switch/70010000012332/ac4d1fc9824876ce756406f0525d50c57ded4b2a666f6dfe40a6ac5c3563fad9');
+CALL RegProduto(1234567890136, "Assassin's Creed Valhalla", 20, 'Jogo', 'Torne-se Eivor, um Viking poderoso, e leve seu clã da Noruega para um novo lar na Inglaterra do século IX.', 299.90, 'Ação/Aventura', 'https://bloguruk.wordpress.com/wp-content/uploads/2020/12/assassins-creed-female-eivor-gold-cover.jpg?w=1400');
+CALL RegProduto(1234567890137, 'Hades', 20, 'Jogo', 'Hades é um jogo roguelike que combina ação rápida, atmosfera rica e narrativa baseada em personagens.', 99.90, 'Roguelike', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREMCI4fQZtDry4mjli_cG4RDY1pHObI2syDw&s');
+CALL RegProduto(1234567890138, 'Among Us', 35, 'Jogo', 'Um jogo de trabalho em equipe e traição no espaço, com 4 a 15 jogadores tentando preparar a nave espacial.', 19.90, 'Dedução Social', 'https://sm.ign.com/ign_br/screenshot/default/among-us_8aj6.jpg');
+CALL RegProduto(1234567890139, 'Dark Souls III', 15, 'Jogo', 'DARK SOULS™ III continua a elevar o patamar de uma das séries mais inovadoras, com inimigos e ambientes colossais.', 149.90, 'RPG', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAJAJiotN6eh6bXlgZUWmA6jEnJbeQj53ayg&s');
+CALL RegProduto(1234567890141, 'Horizon Zero Dawn', 25, 'Jogo', 'Em um mundo pós-apocalíptico, a caçadora Aloy inicia uma jornada para desvendar seu destino em meio a máquinas e tribos primitivas.', 199.90, 'Ação/Aventura', 'https://image.api.playstation.com/vulcan/img/rnd/202009/3000/C14XMwZBi6CYKOacUDf6EzEs.jpg');
+CALL RegProduto(1234567890142, 'Resident Evil Village', 20, 'Jogo', 'A próxima geração do horror de sobrevivência evolui na forma de Resident Evil Village, o oitavo jogo principal da série Resident Evil. Com gráficos ultrarrealistas gerados com o poder da RE Engine, tente sobreviver enquanto o perigo espreita por todos os lados.', 299.90, 'Horror', 'https://www.gamevicio.com/static/imagens_up/big/33/capcom-divulga-a-capa-oficial-e-novas-imagens-de-resident-evil-village-032272.webp');

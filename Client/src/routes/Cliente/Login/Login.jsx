@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Login.css"; // Certifique-se de que o caminho está correto
 
 function Login() {
@@ -47,6 +48,9 @@ function Login() {
 
         <br />
         <button onClick={handleLogin}>Login</button>
+        <Link className="register-link" to={"/register"}>
+          Não tem conta? Registre se!
+        </Link>
       </form>
     </div>
   );
