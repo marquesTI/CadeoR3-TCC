@@ -9,6 +9,7 @@ import Register from "./routes/Cliente/Register/Register.jsx";
 import DetalheProduto from "./routes/Cliente/DetalhesPrd/Detalhes.jsx";
 import Cart from "./routes/Cliente/Cart/Cart.jsx";
 import Login from "./routes/Cliente/Login/Login.jsx";
+import AdmLogin from "./routes/Admin/AdmLogin/AdmLogin.jsx";
 import Checkout from "./routes/Cliente/Checkout/Checkout.jsx";
 import { CartProvider } from "./context/CarrinhoContext.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "/produto/:codbarras", element: <DetalheProduto /> },
       { path: "/cart", element: <Cart /> },
       { path: "/login", element: <Login /> },
+      { path: "/loginadm", element: <AdmLogin /> },
       { path: "/checkout", element: <Checkout /> },
       { path: "/sobre", element: <Sobre /> },
     ],

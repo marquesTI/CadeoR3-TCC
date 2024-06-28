@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../Admin/Admin.css";
 import Axios from "axios";
 import Cards from "../../components/Cards/Cards";
@@ -6,6 +7,24 @@ import Cards from "../../components/Cards/Cards";
 function Admin() {
   const [values, setValues] = useState();
   const [listCard, setListCard] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/loginadm");
+    } else {
+      Axios.get("http://localhost:3001/verifyToken", {
+        headers: { Authorization: `Bearer ${token}` },
+      }).then((response) => {
+        if (!response.data.auth || response.data.perfil !== "admin") {
+          localStorage.removeItem("token");
+          navigate("/admin");
+        }
+      });
+    }
+  }, [navigate]);
+
   console.log(listCard);
   const handleRegisterGame = () => {
     Axios.post("http://localhost:3001/register", {

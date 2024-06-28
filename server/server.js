@@ -130,6 +130,48 @@ app.post("/login", (req, res) => {
     }
   );
 });
+
+app.post("/loginadm", (req, res) => {
+  const { username, password } = req.body;
+  db.query(
+    `SELECT l.*, p.Nome as perfil 
+     FROM TbLogin l 
+     JOIN TbPerfis p ON l.Perfil = p.Id 
+     WHERE l.Login = ? AND l.Senha = ?`,
+    [username, password],
+    (err, result) => {
+      if (err) {
+        res.status(500).send(err);
+      } else if (result.length > 0) {
+        const user = result[0];
+        const token = jwt.sign(
+          { id: user.Id, perfil: user.perfil },
+          "secretkey",
+          { expiresIn: "1h" }
+        );
+        res.json({ auth: true, token });
+      } else {
+        res.json({ auth: false, message: "Invalid credentials" });
+      }
+    }
+  );
+});
+
+app.get("/verifyToken", (req, res) => {
+  const token = req.headers["authorization"];
+  if (!token) {
+    res.json({ auth: false });
+  } else {
+    jwt.verify(token.split(" ")[1], "secretkey", (err, decoded) => {
+      if (err) {
+        res.json({ auth: false });
+      } else {
+        res.json({ auth: true, perfil: decoded.perfil });
+      }
+    });
+  }
+});
+
 app.post("/finalizar-compra", async (req, res) => {
   const { vNf, vNomeCli, vCodBarras, vTipoPagamento, vQtdDesejada } = req.body;
 
